@@ -1,3 +1,6 @@
+TODO add custom capability for outdoor temperature
+TODO refresh timer
+
 ```bash
 smartthings edge:channels:create
 ```

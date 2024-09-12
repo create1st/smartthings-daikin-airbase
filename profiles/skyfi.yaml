@@ -2,16 +2,21 @@ name: daikin.skyfi.v1
 components:
   - id: main
     capabilities:
+      - id: switch
+        version: 1
+      - id: temperatureMeasurement
+        version: 1
+      - id: thermostatOperatingState
+        version: 1
+      - id: airConditionerFanMode
+        version: 1
+      - id: thermostatMode
+        version: 1
+      - id: thermostatHeatingSetpoint
+        version: 1
+      - id: thermostatCoolingSetpoint
+        version: 1
       - id: refresh
         version: 1
     categories:
       - name: AirConditioner
-preferences:
-  - title: "AP IP"
-    name: "apiHost"
-    description: "IP Address of AP"
-    required: true
-    preferenceType: string
-    definition:
-      stringType: text
-      default: "192.168.50.158"

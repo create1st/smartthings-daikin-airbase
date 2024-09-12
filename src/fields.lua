@@ -1,6 +1,6 @@
 
 local Fields = {
-  API_HOST = "apiHost",
+  API_HOST = "daikin",
 }
 
 return Fields
