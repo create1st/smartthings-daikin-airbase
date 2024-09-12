@@ -17,19 +17,31 @@ function ui:initialize(device)
         capabilities.thermostatMode.thermostatMode.fanonly.NAME,
         capabilities.thermostatMode.thermostatMode.dryair.NAME,
     }, { visibility = { displayed = false } }))
-    self:update(device, {
+    self:notify(device, {
         capabilities.switch.switch.off(),
         capabilities.temperatureMeasurement.temperature({ value = 25, unit = 'C' }),
         capabilities.thermostatMode.thermostatMode.fanonly(),
+        capabilities.airConditionerFanMode.fanMode(Modes.AUTO),
+        capabilities.thermostatOperatingState.thermostatOperatingState.fan_only(),
         capabilities.thermostatHeatingSetpoint.heatingSetpoint({ value = 26, unit = 'C' }),
         capabilities.thermostatCoolingSetpoint.coolingSetpoint({ value = 24, unit = 'C' }),
-        capabilities.thermostatOperatingState.thermostatOperatingState.fan_only(),
-        capabilities.airConditionerFanMode.fanMode(Modes.AUTO),
     })
 end
 
-function ui:update(device, new_state)
-    for _, v in ipairs(new_state) do
+function ui:update(device, state)
+    self:notify(device, {
+        state:get_switch_state(),
+        state:get_indoor_temperature(),
+        state:get_aircon_state(),
+        state:get_fan_speed(),
+        state:get_aircon_mode(),
+        state:get_heating_temperature(),
+        state:get_cooling_temperature(),
+    })
+end
+
+function ui:notify(device, controls)
+    for _, v in ipairs(controls) do
         device:emit_event(v)
     end
 end

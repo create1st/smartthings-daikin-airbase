@@ -5,8 +5,8 @@ local neturl = require('net.url')
 local ltn12 = require('ltn12')
 local log = require('log')
 
-local MAX_RECONNECT_ATTEMPTS = 10
-local RECONNECT_PERIOD = 2 -- seconds
+local MAX_RECONNECT_ATTEMPTS = 20
+local RECONNECT_PERIOD = 1 -- seconds
 local Daikin = {}
 
 function Daikin:new(api_host)

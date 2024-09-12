@@ -52,11 +52,11 @@ local skyfi_driver = Driver("Daikin Skyfi", {
     supported_capabilities = {
         capabilities.switch,
         capabilities.temperatureMeasurement,
+        capabilities.thermostatOperatingState,
+        capabilities.airConditionerFanMode,
         capabilities.thermostatMode,
         capabilities.thermostatHeatingSetpoint,
         capabilities.thermostatCoolingSetpoint,
-        capabilities.thermostatOperatingState,
-        capabilities.airConditionerFanMode,
         capabilities.refresh,
     },
     ap = {}
