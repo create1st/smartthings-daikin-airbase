@@ -4,7 +4,6 @@ All product and company names or logos are trademarks™ or registered® tradema
 
 TODO 
 - add custom capability for outdoor temperature
-- device:online() device:offline() handling
 
 ```bash
 smartthings edge:channels:create
