@@ -1,0 +1,5 @@
+name: 'Daikin Airbase BRP15B61'
+packageKey: 'com.smartthings.daikin.skyfi'
+permissions:
+  lan: {}
+  discovery: {}
