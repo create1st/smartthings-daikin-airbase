@@ -24,6 +24,35 @@ function Daikin:basic_info()
     return self:send_command('/common/basic_info')
 end
 
+-- Get date/time
+-- ret=OK,sta=2,cur=2024/9/12 23:58:31,reg=au,dst=0,zone=54
+function Daikin:get_datetime()
+    log.debug(string.format("get_datetime (%s)", self.api_host))
+    return self:send_command('/common/get_datetime')
+end
+
+-- Get dealer info
+-- ret=OK,dealer_name=%2d,installer=%2d,contactNumber=%2d
+function Daikin:get_dealer_info()
+    log.debug(string.format("get_dealer_info (%s)", self.api_host))
+    return self:send_command('/aircon/get_dealer_info')
+end
+
+-- Get zone settings
+-- ret=OK,zone_name=-%3b-%3b-%3b-%3b-%3b-%3b-%3b-,zone_onoff=0%3b0%3b0%3b0%3b0%3b0%3b0%3b0
+function Daikin:get_zone_setting()
+    log.debug(string.format("get_zone_setting (%s)", self.api_host))
+    return self:send_command('/aircon/get_zone_setting')
+end
+
+-- Get quick timer
+-- ret=OK,t1_ena=0,t1_pow=1,t1_time=0,t2_ena=0,t2_pow=0,t2_time=735
+function Daikin:get_quick_timer()
+    log.debug(string.format("get_quick_timer (%s)", self.api_host))
+    return self:send_command('/aircon/get_quick_timer')
+end
+
+
 -- Indoor/outdoor temperature sensor
 -- ret=OK,err=0,htemp=23,otemp=20
 function Daikin:get_sensor_info()
@@ -44,6 +73,7 @@ function Daikin:get_model_info()
     log.debug(string.format("get_model_info (%s)", self.api_host))
     return self:send_command('/aircon/get_model_info')
 end
+
 
 -- Get all aircon parameters
 -- ret=OK,pow=0,mode=7,operate=2,bk_auto=2,stemp=25,dt1=25,dt2=25,f_rate=1,dfr1=1,dfr2=1,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
