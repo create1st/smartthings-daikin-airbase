@@ -1,5 +1,10 @@
-TODO add custom capability for outdoor temperature
-TODO refresh timer
+# Daikin Airbase BRP15B61 edge handler for Smarthings
+### Disclaimer
+All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them or any associated subsidiaries! This personal project is maintained in spare time and has no business goal. Daikin is a trademark of DAIKIN INDUSTRIES, LTD. Smartthings is a trademark of SmartThings Inc. a subsidiary of Samsung Electronics.
+
+TODO 
+- add custom capability for outdoor temperature
+- device:online() device:offline() handling
 
 ```bash
 smartthings edge:channels:create

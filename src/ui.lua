@@ -1,10 +1,17 @@
 local capabilities = require("st.capabilities")
 local Modes = require("modes")
+local Daikin = require('daikin')
+local State = require('state')
+local Fields = require('fields')
+local log = require("log")
+
+local SCHEDULE_PERIOD = 300
 
 local ui = {}
 
-function ui:initialize(device)
-    device:online()
+function ui:initialize(device, api_host)
+    log.debug(string.format("[%s] initialize (%s)", device.device_network_id, api_host))
+    device:set_field(Fields.API_HOST, api_host, { persist = true })
     local supported_fan_modes = {}
     for _, v in pairs(Modes) do
         table.insert(supported_fan_modes, v)
@@ -28,7 +35,16 @@ function ui:initialize(device)
     })
 end
 
-function ui:update(device, state)
+function ui:update(device)
+    log.debug(string.format("[%s] update", device.device_network_id))
+    local api_host = device:get_field(Fields.API_HOST)
+    local daikin = Daikin:new(api_host)
+    local control_info = daikin:get_control_info()
+    local sensor_info = daikin:get_sensor_info()
+    if (control_info == nil or sensor_info == nil) then
+        device:offline()
+    end
+    local state = State:new(control_info, sensor_info)
     self:notify(device, {
         state:get_switch_state(),
         state:get_indoor_temperature(),
@@ -40,7 +56,26 @@ function ui:update(device, state)
     })
 end
 
+function ui:schedule_refresh(device)
+    log.debug(string.format("[%s] schedule_refresh", device.device_network_id))
+    device.thread:call_on_schedule(
+            SCHEDULE_PERIOD,
+            function()
+                return self:update(device)
+            end,
+            'Refresh schedule')
+end
+
+function ui:destroy(device)
+    log.debug(string.format("[%s] device", device.device_network_id))
+    for timer in pairs(device.thread.timers) do
+        device.thread:cancel_timer(timer)
+    end
+end
+
 function ui:notify(device, controls)
+    log.debug(string.format("[%s] notify", device.device_network_id))
+    device:online()
     for _, v in ipairs(controls) do
         device:emit_event(v)
     end
