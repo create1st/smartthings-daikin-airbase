@@ -1,29 +1,32 @@
-local capabilities = require("st.capabilities")
-local Modes = require("modes")
+local capabilities = require('st.capabilities')
+local controller = require('controller')
+local Modes = require('modes')
 local Daikin = require('daikin')
 local State = require('state')
 local Fields = require('fields')
-local log = require("log")
+local log = require('log')
 
 local SCHEDULE_PERIOD = 300
 
 local ui = {}
 
 function ui:initialize(device, api_host)
-    log.debug(string.format("[%s] initialize (%s)", device.device_network_id, api_host))
+    log.debug(string.format('[%s] initialize (%s)', device.id, api_host))
     device:set_field(Fields.API_HOST, api_host, { persist = true })
     local supported_fan_modes = {}
     for _, v in pairs(Modes) do
         table.insert(supported_fan_modes, v)
     end
-    device:emit_event(capabilities.airConditionerFanMode.supportedAcFanModes(supported_fan_modes))
-    device:emit_event(capabilities.thermostatMode.supportedThermostatModes({
-        capabilities.thermostatMode.thermostatMode.heat.NAME,
-        capabilities.thermostatMode.thermostatMode.cool.NAME,
-        capabilities.thermostatMode.thermostatMode.auto.NAME,
-        capabilities.thermostatMode.thermostatMode.fanonly.NAME,
-        capabilities.thermostatMode.thermostatMode.dryair.NAME,
-    }, { visibility = { displayed = false } }))
+    self:notify(device, {
+        capabilities.airConditionerFanMode.supportedAcFanModes(supported_fan_modes),
+        capabilities.thermostatMode.supportedThermostatModes({
+            capabilities.thermostatMode.thermostatMode.heat.NAME,
+            capabilities.thermostatMode.thermostatMode.cool.NAME,
+            capabilities.thermostatMode.thermostatMode.auto.NAME,
+            capabilities.thermostatMode.thermostatMode.fanonly.NAME,
+            capabilities.thermostatMode.thermostatMode.dryair.NAME,
+        }, { visibility = { displayed = false } })
+    })
     self:notify(device, {
         capabilities.switch.switch.off(),
         capabilities.temperatureMeasurement.temperature({ value = 25, unit = 'C' }),
@@ -35,14 +38,24 @@ function ui:initialize(device, api_host)
     })
 end
 
-function ui:update(device)
-    log.debug(string.format("[%s] update", device.device_network_id))
+function ui:update(device, mode_update)
+    log.debug(string.format('[%s] update', device.id))
     local api_host = device:get_field(Fields.API_HOST)
     local daikin = Daikin:new(api_host)
     local control_info = daikin:get_control_info()
     local sensor_info = daikin:get_sensor_info()
     if (control_info == nil or sensor_info == nil) then
         device:offline()
+        return
+    end
+    if (mode_update ~= nil) then
+        local control_update = controller:update(control_info, mode_update)
+        daikin:set_control_info(control_update)
+        control_info = daikin:get_control_info()
+        if (control_info == nil) then
+            device:offline()
+            return
+        end
     end
     local state = State:new(control_info, sensor_info)
     self:notify(device, {
@@ -57,7 +70,7 @@ function ui:update(device)
 end
 
 function ui:schedule_refresh(device)
-    log.debug(string.format("[%s] schedule_refresh", device.device_network_id))
+    log.debug(string.format('[%s] schedule_refresh', device.id))
     device.thread:call_on_schedule(
             SCHEDULE_PERIOD,
             function()
@@ -67,14 +80,14 @@ function ui:schedule_refresh(device)
 end
 
 function ui:destroy(device)
-    log.debug(string.format("[%s] device", device.device_network_id))
+    log.debug(string.format('[%s] device', device.id))
     for timer in pairs(device.thread.timers) do
         device.thread:cancel_timer(timer)
     end
 end
 
 function ui:notify(device, controls)
-    log.debug(string.format("[%s] notify", device.device_network_id))
+    log.debug(string.format('[%s] notify', device.id))
     device:online()
     for _, v in ipairs(controls) do
         device:emit_event(v)

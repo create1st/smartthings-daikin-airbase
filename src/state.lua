@@ -12,16 +12,16 @@ local switch_mapping = {
 
 local aircon_state_mapping = {
     [Settings.DRY] = capabilities.thermostatOperatingState.thermostatOperatingState.idle(), -- cooling ??
-    [Settings.COLD] = capabilities.thermostatOperatingState.thermostatOperatingState.cooling(),
-    [Settings.HOT] = capabilities.thermostatOperatingState.thermostatOperatingState.heating(),
-    [Settings.FAN] = capabilities.thermostatOperatingState.thermostatOperatingState.fan_only(),
+    [Settings.COOL] = capabilities.thermostatOperatingState.thermostatOperatingState.cooling(),
+    [Settings.HEAT] = capabilities.thermostatOperatingState.thermostatOperatingState.heating(),
+    [Settings.FAN_ONLY] = capabilities.thermostatOperatingState.thermostatOperatingState.fan_only(),
 }
 
 local aircon_mode_mapping = {
     [Settings.DRY] = capabilities.thermostatMode.thermostatMode.dryair(),
-    [Settings.COLD] = capabilities.thermostatMode.thermostatMode.cool(),
-    [Settings.HOT] = capabilities.thermostatMode.thermostatMode.heat(),
-    [Settings.FAN] = capabilities.thermostatMode.thermostatMode.fanonly(),
+    [Settings.COOL] = capabilities.thermostatMode.thermostatMode.cool(),
+    [Settings.HEAT] = capabilities.thermostatMode.thermostatMode.heat(),
+    [Settings.FAN_ONLY] = capabilities.thermostatMode.thermostatMode.fanonly(),
 }
 
 local fan_speed_mapping = {

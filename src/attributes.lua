@@ -1,5 +1,3 @@
---ret=OK,err=0,model=NOTSUPPORT,type=N,humd=0,s_humd=7,en_zone=0,en_linear_zone=0,en_filter_sign=1,acled=1,land=0,elec=0,temp=1,m_dtct=0,ac_dst=au,dmnd=0,en_temp_setting=1,en_frate=1,en_fdir=0,en_rtemp_a=0,en_spmode=0,en_ipw_sep=0,en_scdltmr=0,en_mompow=0,en_patrol=0,en_airside=0,en_quick_timer=1,en_auto=0,en_dry=1,en_common_zone=0,cool_l=16,cool_h=32,heat_l=16,heat_h=32,frate_steps=3,en_frate_auto=1
-
 local Attributes = {
   API_HOST = 'host',
   STATUS = 'ret', -- OK, PARAM NG
@@ -58,23 +56,4 @@ local Attributes = {
   FAN_DIRECTION_COOL_RO = 'dfd1',
 }
 
---DRY
---ret=OK,pow=0,mode=7,operate=2,bk_auto=2,stemp=25,dt1=25,dt2=25,f_rate=1,dfr1=1,dfr2=1,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
---HEAT 25
---ret=OK,pow=0,mode=1,operate=1,bk_auto=1,stemp=25,dt1=25,dt2=25,f_rate=1,dfr1=1,dfr2=1,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
---FAN
---ret=OK,pow=0,mode=0,operate=0,bk_auto=1,stemp=25,dt1=25,dt2=25,f_rate=1,dfr1=1,dfr2=1,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
---COOL 25
---ret=OK,pow=0,mode=2,operate=2,bk_auto=2,stemp=25,dt1=25,dt2=25,f_rate=1,dfr1=1,dfr2=1,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
---AUTO cool
---ret=OK,pow=0,mode=2,operate=2,bk_auto=2,stemp=25,dt1=25,dt2=25,f_rate=1,dfr1=1,dfr2=1,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
-
--- FAN 1
--- ret=OK,pow=0,mode=0,operate=0,bk_auto=2,stemp=25,dt1=25,dt2=24,f_rate=1,dfr1=1,dfr2=1,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
--- FAN 2
--- ret=OK,pow=0,mode=0,operate=0,bk_auto=2,stemp=25,dt1=25,dt2=25,f_rate=3,dfr1=1,dfr2=3,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
--- FAN 3
--- ret=OK,pow=0,mode=0,operate=0,bk_auto=2,stemp=25,dt1=25,dt2=25,f_rate=5,dfr1=1,dfr2=5,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
--- FAN AUTO
--- ret=OK,pow=0,mode=0,operate=0,bk_auto=2,stemp=25,dt1=25,dt2=25,f_rate=0,dfr1=1,dfr2=0,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
 return Attributes

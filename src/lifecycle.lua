@@ -17,7 +17,7 @@ end
 
 function lifecycle_handler.removed(_, device)
     log.debug('Removing Daikin AP device')
-  ui:destroy(device)
+    ui:destroy(device)
 end
 
 return lifecycle_handler
