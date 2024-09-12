@@ -1,6 +1,7 @@
-local socket = require "cosock.socket"
-local log = require("log")
-local daikin = require("daikin")
+local socket = require('cosock.socket')
+local daikin = require('daikin')
+local log = require('log')
+local Attributes = require('attributes')
 
 local discovery = { }
 
@@ -9,15 +10,15 @@ function discovery.handle_discovery(driver, _, should_continue)
     while should_continue() do
         local basic_info_ext = discovery.find_device()
         if basic_info_ext ~= nil then
-            local api_host = basic_info_ext['host']
+            local api_host = basic_info_ext[Attributes.API_HOST]
             local metadata = {
                 type = 'LAN',
-                device_network_id = basic_info_ext['mac'],
-                label = basic_info_ext['name'],
+                device_network_id = basic_info_ext[Attributes.MAC],
+                label = basic_info_ext[Attributes.DEVICE_NAME],
                 profile = 'daikin.skyfi.v1',
                 manufacturer = 'Daikin',
-                model = '"BRP15B61',
-                vendor_provided_label = basic_info_ext['ssid']
+                model = 'BRP15B61',
+                vendor_provided_label = basic_info_ext[Attributes.SSID]
             }
             driver.ap[metadata.device_network_id] = api_host
             -- tell the cloud to create a new device record, will get synced back down
@@ -51,7 +52,7 @@ function discovery.find_device()
 
   if body ~= nil then
     local basic_info_ext = daikin:parse_body(body)
-    basic_info_ext['host'] = ip
+    basic_info_ext[Attributes.API_HOST] = ip
     return basic_info_ext
   end
   return nil
