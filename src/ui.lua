@@ -23,7 +23,6 @@ function ui:initialize(device, api_host)
         capabilities.thermostatMode.supportedThermostatModes({
             capabilities.thermostatMode.thermostatMode.heat.NAME,
             capabilities.thermostatMode.thermostatMode.cool.NAME,
-            capabilities.thermostatMode.thermostatMode.auto.NAME,
             capabilities.thermostatMode.thermostatMode.fanonly.NAME,
             capabilities.thermostatMode.thermostatMode.dryair.NAME,
         }, { visibility = { displayed = false } })

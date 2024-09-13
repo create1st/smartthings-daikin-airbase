@@ -8,16 +8,15 @@ local log = require('log')
 local control = {}
 
 local switch_mapping = {
-    [capabilities.switch.commands.on.NAME] = Settings.ON,
-    [capabilities.switch.commands.off.NAME] = Settings.OFF,
+    [capabilities.switch.switch.on.NAME] = Settings.ON,
+    [capabilities.switch.switch.off.NAME] = Settings.OFF,
 }
 
 local aircon_mode_mapping = {
-    -- capabilities.thermostatMode.commands.auto.NAME
-    ['dryair'] = Settings.DRY,
-    [capabilities.thermostatMode.commands.cool.NAME] = Settings.COOL,
-    [capabilities.thermostatMode.commands.heat.NAME] = Settings.HEAT,
-    ['fanonly'] = Settings.FAN_ONLY,
+    [capabilities.thermostatMode.thermostatMode.dryair.NAME] = Settings.DRY,
+    [capabilities.thermostatMode.thermostatMode.cool.NAME] = Settings.COOL,
+    [capabilities.thermostatMode.thermostatMode.heat.NAME] = Settings.HEAT,
+    [capabilities.thermostatMode.thermostatMode.fanonly.NAME] = Settings.FAN_ONLY,
 }
 
 local fan_speed_mapping = {
