@@ -1,5 +1,31 @@
-TODO add custom capability for outdoor temperature
-TODO refresh timer
+# Daikin Airbase BRP15B61 edge handler for Smarthings
+### Disclaimer
+All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. 
+Use of them does not imply any affiliation with or endorsement by them or any associated subsidiaries!
+**Daikin** is a trademark of **Daikin Industries, Ltd**. **Smartthings** is a trademark of **SmartThings Inc.** a subsidiary of **Samsung Electronics**.
+
+This personal project has educational context, is developed as a proof of concept, and has no business goal.
+Author does not take any responsibility to charm and damage caused by using this software. You may use it on your own risk and responsibility only.
+
+### Resources
+https://github.com/ael-code/daikin-control
+https://github.com/Apollon77/daikin-controller
+https://developer.smartthings.com/docs/devices/hub-connected/edge-architecture
+https://developer.smartthings.com/docs/devices/hub-connected/first-lua-driver
+https://developer.smartthings.com/docs/devices/capabilities/capabilities-reference
+https://developer.smartthings.com/docs/devices/capabilities/custom-capabilities
+https://community.smartthings.com/t/tutorial-writing-an-rpc-client-edge-device-driver/230285
+https://community.smartthings.com/t/tutorial-creating-drivers-for-lan-devices-with-smartthings-edge/229501
+
+### TODO 
+- add custom capability for outdoor temperature
+
+### Dependencies
+https://developer.smartthings.com/docs/sdks/cli/introduction
+https://github.com/SmartThingsCommunity/SmartThingsEdgeDrivers/releases/tag/apiv9_52
+
+### Installation
+#### Uploading Your Driver to SmartThings
 
 ```bash
 smartthings edge:channels:create
@@ -79,7 +105,7 @@ using previously specified default hub labeled "Hub - Samsung S90CA 55" (4c83ac0
 ? Select a driver to install. 1
 driver cb32c4d5-a7e4-4624-9c4a-e8e8e2b68f87 installed to hub 4c83ac01-c974-41b4-8f81-51429c21e4a9
 ```
-Cat logs
+#### Accessing live logs
 ```shell
 smartthings edge:drivers:logcat cb32c4d5-a7e4-4624-9c4a-e8e8e2b68f87
 ```
@@ -108,3 +134,8 @@ SecretDataDispatcher: Daikin Skyfi
   default_handlers:
   child_dispatchers:
 ```
+#### Onboarding your New Device
+Open the SmartThings App and go to the Location where the Hub is installed.
+
+a. Select Add (+) and then Device
+b. Tap on “Scan nearby” and check the logs emitted at your logcat session

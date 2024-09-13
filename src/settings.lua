@@ -4,9 +4,9 @@ local Settings = {
     ON = '1',
     -- mode
     DRY = '7',
-    COLD = '2',
-    HOT = '1',
-    FAN = '0',
+    COOL = '2',
+    HEAT = '1',
+    FAN_ONLY = '0',
     -- fan speed
     FAN_SPEED_1 = '1',
     FAN_SPEED_2 = '3',

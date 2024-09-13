@@ -3,7 +3,9 @@ local cosock = require('cosock')
 local http = cosock.asyncify('socket.http')
 local neturl = require('net.url')
 local ltn12 = require('ltn12')
+local json = require('st.json')
 local log = require('log')
+local Attributes = require('attributes')
 
 local MAX_RECONNECT_ATTEMPTS = 20
 local RECONNECT_PERIOD = 1 -- seconds
@@ -23,6 +25,35 @@ function Daikin:basic_info()
     log.debug(string.format("basic_info (%s)", self.api_host))
     return self:send_command('/common/basic_info')
 end
+
+-- Get date/time
+-- ret=OK,sta=2,cur=2024/9/12 23:58:31,reg=au,dst=0,zone=54
+function Daikin:get_datetime()
+    log.debug(string.format("get_datetime (%s)", self.api_host))
+    return self:send_command('/common/get_datetime')
+end
+
+-- Get dealer info
+-- ret=OK,dealer_name=%2d,installer=%2d,contactNumber=%2d
+function Daikin:get_dealer_info()
+    log.debug(string.format("get_dealer_info (%s)", self.api_host))
+    return self:send_command('/aircon/get_dealer_info')
+end
+
+-- Get zone settings
+-- ret=OK,zone_name=-%3b-%3b-%3b-%3b-%3b-%3b-%3b-,zone_onoff=0%3b0%3b0%3b0%3b0%3b0%3b0%3b0
+function Daikin:get_zone_setting()
+    log.debug(string.format("get_zone_setting (%s)", self.api_host))
+    return self:send_command('/aircon/get_zone_setting')
+end
+
+-- Get quick timer
+-- ret=OK,t1_ena=0,t1_pow=1,t1_time=0,t2_ena=0,t2_pow=0,t2_time=735
+function Daikin:get_quick_timer()
+    log.debug(string.format("get_quick_timer (%s)", self.api_host))
+    return self:send_command('/aircon/get_quick_timer')
+end
+
 
 -- Indoor/outdoor temperature sensor
 -- ret=OK,err=0,htemp=23,otemp=20
@@ -45,6 +76,7 @@ function Daikin:get_model_info()
     return self:send_command('/aircon/get_model_info')
 end
 
+
 -- Get all aircon parameters
 -- ret=OK,pow=0,mode=7,operate=2,bk_auto=2,stemp=25,dt1=25,dt2=25,f_rate=1,dfr1=1,dfr2=1,f_airside=0,airside1=0,airside2=0,f_auto=0,auto1=0,auto2=0,f_dir=0,dfd1=0,dfd2=0,filter_sign_info=0,cent=0,en_cent=0,remo=2
 function Daikin:get_control_info()
@@ -55,7 +87,7 @@ end
 -- Set all aircon parameters
 -- ret=OK
 function Daikin:set_control_info(data)
-    log.debug(string.format("set_control_info (%s), (%s)", self.api_host, (data or "")))
+    log.debug(string.format("set_control_info (%s), (%s)", self.api_host, json.encode(data)))
     return self:send_command('/aircon/set_control_info', data)
 end
 
@@ -67,8 +99,8 @@ function Daikin:reboot()
 end
 
 function Daikin:send_command(command_url, data)
-    log.debug(string.format("send_command (%s), (%s)", self.api_host, command_url, (data or "")))
-    local query = neturl.buildQuery(body or {})
+    log.debug(string.format("send_command (%s),(%s),(%s)", self.api_host, command_url, (data or "")))
+    local query = neturl.buildQuery(data or {})
     local api_call = string.format("http://%s/skyfi%s?%s", self.api_host, command_url, query)
     log.debug(string.format("send_command (%s)", api_call))
     local retries = 0
@@ -80,30 +112,20 @@ function Daikin:send_command(command_url, data)
             sink = ltn12.sink.table(res)
         })
         if (status == 200) then
-            return self:parse_body(table.concat(res))
+            log.debug(string.format("send_command (%s) successful, attempt=%s", api_call, retries))
+            local parsed_body = self:parse_body(table.concat(res))
+            local return_code = parsed_body[Attributes.RETURN_CODE]
+            if (return_code ~= 'OK') then
+                log.error(string.format("send_command (%s) returned code=%s", api_call, return_code))
+                return nil
+            end
+            return parsed_body
         end
+        log.warn(string.format("send_command (%s) failed with status=%s, attempt=%s", api_call, (status or ""), retries))
         socket.sleep(RECONNECT_PERIOD)
+        retries = retries + 1
     end
-
-    log.debug(string.format("send_command (%s) failed (%s) status=%s", api_call, (body or ""), (status or "")))
     return nil
-end
-
-function Daikin:to_body(data)
-    local response = ""
-    if (data == nil or data == false) then
-        return response
-    end
-    for k, v in pairs(tbl) do
-        if type(k) == "string" then
-            response = string.format("%s,%s=%s", response, k, v);
-        end
-    end
-    if response ~= "" then
-        response = response:sub(2)
-    end
-    log.debug(string.format("parse_body: key=%s, value=%s", (key or ""), (value or "")))
-    return response
 end
 
 function Daikin:parse_body(body)
@@ -115,9 +137,10 @@ function Daikin:parse_body(body)
         local key, value = pair:match "([^=]*)=(.*)"
         key = self:decode(key)
         value = self:decode(value)
-        log.debug(string.format("parse_body: key=%s, value=%s", (key or ""), (value or "")))
+        --log.debug(string.format("parse_body: key=%s, value=%s", (key or ""), (value or "")))
         response[key] = value
     end
+    log.debug(string.format("parse_body response: %s", json.encode(response)))
     return response
 end
 
