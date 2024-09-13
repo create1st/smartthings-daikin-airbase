@@ -11,7 +11,7 @@ local switch_mapping = {
 }
 
 local aircon_state_mapping = {
-    [Settings.DRY] = capabilities.thermostatOperatingState.thermostatOperatingState.idle(), -- cooling ??
+    [Settings.DRY] = capabilities.thermostatOperatingState.thermostatOperatingState.idle(),
     [Settings.COOL] = capabilities.thermostatOperatingState.thermostatOperatingState.cooling(),
     [Settings.HEAT] = capabilities.thermostatOperatingState.thermostatOperatingState.heating(),
     [Settings.FAN_ONLY] = capabilities.thermostatOperatingState.thermostatOperatingState.fan_only(),
@@ -46,6 +46,16 @@ end
 
 function State:get_indoor_temperature()
     local temperature = self.sensor_info[Attributes.TEMPERATURE_HOME_RO]
+    return capabilities.temperatureMeasurement.temperature({ value = tonumber(temperature), unit = 'C' })
+end
+
+function State:get_outdoor_temperature()
+    local temperature = self.sensor_info[Attributes.TEMPERATURE_OUTDOOR_RO]
+    return capabilities.temperatureMeasurement.temperature({ value = tonumber(temperature), unit = 'C' })
+end
+
+function State:get_set_temperature()
+    local temperature = self.control_info[Attributes.TEMPERATURE_SET]
     return capabilities.temperatureMeasurement.temperature({ value = tonumber(temperature), unit = 'C' })
 end
 

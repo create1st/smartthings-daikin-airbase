@@ -1,11 +1,12 @@
 local capabilities = require('st.capabilities')
 local json = require('st.json')
 local controller = require('controller')
+local log = require('log')
 local Modes = require('modes')
 local Daikin = require('daikin')
 local State = require('state')
 local Fields = require('fields')
-local log = require('log')
+local Profile = require('profile')
 
 local SCHEDULE_PERIOD = 300
 
@@ -18,7 +19,7 @@ function ui:initialize(device, api_host)
     for _, v in pairs(Modes) do
         table.insert(supported_fan_modes, v)
     end
-    self:notify(device, {
+    self:notify(device, Profile.UNIT,{
         capabilities.airConditionerFanMode.supportedAcFanModes(supported_fan_modes),
         capabilities.thermostatMode.supportedThermostatModes({
             capabilities.thermostatMode.thermostatMode.heat.NAME,
@@ -27,14 +28,22 @@ function ui:initialize(device, api_host)
             capabilities.thermostatMode.thermostatMode.dryair.NAME,
         }, { visibility = { displayed = false } })
     })
-    self:notify(device, {
+    self:notify(device, Profile.MAIN,{
         capabilities.switch.switch.off(),
-        capabilities.temperatureMeasurement.temperature({ value = 25, unit = 'C' }),
+    })
+    self:notify(device, Profile.UNIT,{
+        capabilities.temperatureMeasurement.temperature({ value = 24, unit = 'C' }),
         capabilities.thermostatMode.thermostatMode.fanonly(),
         capabilities.airConditionerFanMode.fanMode(Modes.AUTO),
         capabilities.thermostatOperatingState.thermostatOperatingState.fan_only(),
         capabilities.thermostatHeatingSetpoint.heatingSetpoint({ value = 26, unit = 'C' }),
         capabilities.thermostatCoolingSetpoint.coolingSetpoint({ value = 24, unit = 'C' }),
+    })
+    self:notify(device, Profile.INDOOR, {
+        capabilities.temperatureMeasurement.temperature({ value = 25, unit = 'C' }),
+    })
+    self:notify(device, Profile.OUTDOOR, {
+        capabilities.temperatureMeasurement.temperature({ value = 20, unit = 'C' }),
     })
 end
 
@@ -62,14 +71,22 @@ function ui:update(device, mode_update)
         log.debug(string.format('[%s] best effort update result: %s', device.id, json.encode(control_info)))
     end
     local state = State:new(control_info, sensor_info)
-    self:notify(device, {
+    self:notify(device, Profile.MAIN, {
         state:get_switch_state(),
-        state:get_indoor_temperature(),
+    })
+    self:notify(device, Profile.UNIT, {
+        state:get_set_temperature(),
         state:get_aircon_state(),
         state:get_fan_speed(),
         state:get_aircon_mode(),
         state:get_heating_temperature(),
         state:get_cooling_temperature(),
+    })
+    self:notify(device, Profile.INDOOR, {
+        state:get_indoor_temperature(),
+    })
+    self:notify(device, Profile.OUTDOOR, {
+        state:get_outdoor_temperature(),
     })
 end
 
@@ -90,11 +107,12 @@ function ui:destroy(device)
     end
 end
 
-function ui:notify(device, controls)
-    log.debug(string.format('[%s] notify', device.id))
+function ui:notify(device, profile, controls)
+    log.debug(string.format('[%s] notify [%s]', device.id, profile))
+    local component = device.profile.components[profile]
     device:online()
     for _, v in ipairs(controls) do
-        device:emit_event(v)
+        device:emit_component_event(component, v)
     end
 end
 
