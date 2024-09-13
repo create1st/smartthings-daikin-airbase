@@ -1,4 +1,5 @@
 local capabilities = require('st.capabilities')
+local json = require('st.json')
 local controller = require('controller')
 local Modes = require('modes')
 local Daikin = require('daikin')
@@ -50,12 +51,16 @@ function ui:update(device, mode_update)
     end
     if (mode_update ~= nil) then
         local control_update = controller:update(control_info, mode_update)
-        daikin:set_control_info(control_update)
-        control_info = daikin:get_control_info()
-        if (control_info == nil) then
+        local status = daikin:set_control_info(control_update)
+        if (status == nil) then
             device:offline()
             return
         end
+        log.debug(string.format('[%s] best effort update: %s, %s', device.id, json.encode(control_info), json.encode(control_update)))
+        for k, v in pairs(control_update) do
+            control_info[k] = v
+        end
+        log.debug(string.format('[%s] best effort update result: %s', device.id, json.encode(control_info)))
     end
     local state = State:new(control_info, sensor_info)
     self:notify(device, {

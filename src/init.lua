@@ -32,10 +32,10 @@ local skyfi_driver = Driver("Daikin Skyfi", {
         [capabilities.thermostatMode.ID] = {
             [capabilities.thermostatMode.commands.setThermostatMode.NAME] = handlers.set_thermostat_mode,
             [capabilities.thermostatMode.commands.auto.NAME] = thermostat_mode_setter(capabilities.thermostatMode.commands.auto.NAME),
-            [capabilities.thermostatMode.commands.off.NAME] = thermostat_mode_setter(capabilities.thermostatMode.commands.off.NAME),
+            ['fanonly'] = thermostat_mode_setter('fanonly'),
             [capabilities.thermostatMode.commands.cool.NAME] = thermostat_mode_setter(capabilities.thermostatMode.thermostatMode.cool.NAME),
             [capabilities.thermostatMode.commands.heat.NAME] = thermostat_mode_setter(capabilities.thermostatMode.commands.cool.NAME),
-            [capabilities.thermostatMode.commands.emergencyHeat.NAME] = thermostat_mode_setter(capabilities.thermostatMode.commands.emergencyHeat.NAME)
+            ['dryair'] = thermostat_mode_setter('dryair')
         },
         --capabilities.thermostatMode.thermostatMode({ value = "eco" })
         [capabilities.thermostatHeatingSetpoint.ID] = {

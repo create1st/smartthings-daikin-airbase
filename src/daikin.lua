@@ -5,6 +5,7 @@ local neturl = require('net.url')
 local ltn12 = require('ltn12')
 local json = require('st.json')
 local log = require('log')
+local Attributes = require('attributes')
 
 local MAX_RECONNECT_ATTEMPTS = 20
 local RECONNECT_PERIOD = 1 -- seconds
@@ -112,10 +113,17 @@ function Daikin:send_command(command_url, data)
         })
         if (status == 200) then
             log.debug(string.format("send_command (%s) successful, attempt=%s", api_call, retries))
-            return self:parse_body(table.concat(res))
+            local parsed_body = self:parse_body(table.concat(res))
+            local return_code = parsed_body[Attributes.RETURN_CODE]
+            if (return_code ~= 'OK') then
+                log.error(string.format("send_command (%s) returned code=%s", api_call, return_code))
+                return nil
+            end
+            return parsed_body
         end
         log.warn(string.format("send_command (%s) failed with status=%s, attempt=%s", api_call, (status or ""), retries))
         socket.sleep(RECONNECT_PERIOD)
+        retries = retries + 1
     end
     return nil
 end

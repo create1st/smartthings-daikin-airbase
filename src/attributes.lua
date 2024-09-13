@@ -1,6 +1,6 @@
 local Attributes = {
   API_HOST = 'host',
-  STATUS = 'ret', -- OK, PARAM NG
+  RETURN_CODE = 'ret', -- OK, PARAM NG
   MESSAGE = 'msg', -- 404 Not Found
   MAC = 'mac',
   SSID = 'ssid',
@@ -49,11 +49,11 @@ local Attributes = {
 
   -- FAN
   FAN_SPEED = 'f_rate', -- 1=lvl1, 2=lvl3, 5=lvl3, 0=lvl_auto
-  FAN_SPEED_HEAT_RO = 'dfr2',
+  FAN_SPEED_HEAT_RO = 'dfr1',
   FAN_SPEED_COOL_RO = 'dfr2',
   FAN_DIRECTION = 'f_dir', -- 0 for ducted system without control
   FAN_DIRECTION_HEAT_RO = 'dfd1',
-  FAN_DIRECTION_COOL_RO = 'dfd1',
+  FAN_DIRECTION_COOL_RO = 'dfd2',
 }
 
 return Attributes

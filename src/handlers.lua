@@ -16,7 +16,7 @@ function handlers.set_thermostat_mode(_, device, command)
 end
 
 function handlers.set_cooling_setpoint(_, device, command)
-    log.debug(string.format("[%s] set_cooling_setpoint(%s)", device.device_network_id), json.encode(command))
+    log.debug(string.format("[%s] set_cooling_setpoint(%s)", device.id, json.encode(command)))
     ui:update(device, {
         mode = capabilities.thermostatCoolingSetpoint.commands.setCoolingSetpoint.NAME,
         value = command.args.setpoint
