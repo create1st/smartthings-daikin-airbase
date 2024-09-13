@@ -1,24 +1,28 @@
 name: daikin.skyfi.v1
 components:
   - id: main
+    label: Air conditioner
     capabilities:
       - id: switch
         version: 1
     categories:
       - name: AirConditioner
   - id: indoor
+    label: Indoor temperature
     capabilities:
       - id: temperatureMeasurement
         version: 1
     categories:
       - name: TempSensor
   - id: outdoor
+    label: Outdoor temperature
     capabilities:
       - id: temperatureMeasurement
         version: 1
     categories:
       - name: TempSensor
   - id: unit
+    label: Controller
     capabilities:
       - id: temperatureMeasurement
         version: 1
