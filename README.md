@@ -1,11 +1,11 @@
 # Daikin Airbase BRP15B61 edge handler for Smarthings
 ### Disclaimer
 All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. 
-Use of them does not imply any affiliation with or endorsement by them or any associated subsidiaries!
+Their use does not imply affiliation with or endorsement by them or any associated subsidiaries!
 **Daikin** is a trademark of **Daikin Industries, Ltd**. **Smartthings** is a trademark of **SmartThings Inc.** a subsidiary of **Samsung Electronics**.
 
-This personal project has educational context, is developed as a proof of concept, and has no business goal.
-Author does not take any responsibility to charm and damage caused by using this software. You may use it on your own risk and responsibility only.
+This personal project has an educational context, is developed as a proof of concept, and has no business goal.
+The author is not responsible for the harm or damage caused by using this software. You may use it at your own risk and responsibility only.
 
 ### Resources
 https://github.com/ael-code/daikin-control
