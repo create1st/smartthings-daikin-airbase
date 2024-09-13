@@ -137,5 +137,5 @@ SecretDataDispatcher: Daikin Skyfi
 #### Onboarding your New Device
 Open the SmartThings App and go to the Location where the Hub is installed.
 
-a. Select Add (+) and then Device
-b. Tap on “Scan nearby” and check the logs emitted at your logcat session
+a.Select Add (+) and then Device
+b.Tap on “Scan nearby” and check the logs emitted at your logcat session
