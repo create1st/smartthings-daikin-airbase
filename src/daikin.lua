@@ -54,7 +54,6 @@ function Daikin:get_quick_timer()
     return self:send_command('/aircon/get_quick_timer')
 end
 
-
 -- Indoor/outdoor temperature sensor
 -- ret=OK,err=0,htemp=23,otemp=20
 function Daikin:get_sensor_info()
@@ -109,7 +108,12 @@ function Daikin:send_command(command_url, data)
         local _, status = http.request({
             url = api_call,
             method = 'GET',
-            sink = ltn12.sink.table(res)
+            sink = ltn12.sink.table(res),
+            create = function()
+                local sock = cosock.socket.tcp()
+                sock:settimeout(5)
+                return sock
+            end,
         })
         if (status == 200) then
             log.debug(string.format("send_command (%s) successful, attempt=%s", api_call, retries))

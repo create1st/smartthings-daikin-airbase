@@ -10,6 +10,7 @@ The author is not responsible for the harm or damage caused by using this softwa
 ### Resources
 https://github.com/ael-code/daikin-control
 https://github.com/Apollon77/daikin-controller
+https://developer.smartthings.com/docs/edge-device-drivers/
 https://developer.smartthings.com/docs/devices/hub-connected/edge-architecture
 https://developer.smartthings.com/docs/devices/hub-connected/first-lua-driver
 https://developer.smartthings.com/docs/devices/capabilities/capabilities-reference
