@@ -7,10 +7,26 @@ local Daikin = require('daikin')
 local State = require('state')
 local Fields = require('fields')
 local Profile = require('profile')
+local Sensor = require('sensor')
 
 local SCHEDULE_PERIOD = 300
 
 local ui = {}
+
+local DEFAULT_TEMPERATURE_MEASUREMENT = {
+    value = 20,
+    unit = 'C'
+}
+
+local DEFAULT_COOLING_SET_POINT = {
+    value = 24,
+    unit = 'C'
+}
+
+local DEFAULT_HEATING_SET_POINT = {
+    value = 26,
+    unit = 'C'
+}
 
 function ui:initialize(device, api_host)
     log.debug(string.format('[%s] initialize (%s)', device.id, api_host))
@@ -32,18 +48,25 @@ function ui:initialize(device, api_host)
         capabilities.switch.switch.off(),
     })
     self:notify(device, Profile.UNIT,{
-        capabilities.temperatureMeasurement.temperature({ value = 24, unit = 'C' }),
+        capabilities.temperatureMeasurement.temperature(DEFAULT_COOLING_SET_POINT),
         capabilities.thermostatMode.thermostatMode.fanonly(),
         capabilities.airConditionerFanMode.fanMode(Modes.AUTO),
         capabilities.thermostatOperatingState.thermostatOperatingState.fan_only(),
-        capabilities.thermostatHeatingSetpoint.heatingSetpoint({ value = 26, unit = 'C' }),
-        capabilities.thermostatCoolingSetpoint.coolingSetpoint({ value = 24, unit = 'C' }),
+        capabilities.thermostatHeatingSetpoint.heatingSetpoint(DEFAULT_HEATING_SET_POINT),
+        capabilities.thermostatCoolingSetpoint.coolingSetpoint(DEFAULT_COOLING_SET_POINT),
     })
     self:notify(device, Profile.INDOOR, {
-        capabilities.temperatureMeasurement.temperature({ value = 25, unit = 'C' }),
+        capabilities.temperatureMeasurement.temperature(DEFAULT_TEMPERATURE_MEASUREMENT),
     })
     self:notify(device, Profile.OUTDOOR, {
-        capabilities.temperatureMeasurement.temperature({ value = 20, unit = 'C' }),
+        capabilities.temperatureMeasurement.temperature(DEFAULT_TEMPERATURE_MEASUREMENT),
+    })
+end
+
+function ui:initialize_temperature_sensor(device)
+    log.debug(string.format('[%s] initialize temperature sensor', device.id))
+    self:notify(device, Profile.MAIN, {
+        capabilities.temperatureMeasurement.temperature(DEFAULT_TEMPERATURE_MEASUREMENT),
     })
 end
 
@@ -88,6 +111,19 @@ function ui:update(device, mode_update)
     self:notify(device, Profile.OUTDOOR, {
         state:get_outdoor_temperature(),
     })
+    local indoor_temperature_sensor = device:get_child_by_parent_assigned_key(Sensor.INDOOR)
+    if (indoor_temperature_sensor ~= nil) then
+        self:notify(indoor_temperature_sensor, Profile.MAIN, {
+            state:get_indoor_temperature(),
+        })
+
+    end
+    local outdoor_temperature_sensor = device:get_child_by_parent_assigned_key(Sensor.OUTDOOR)
+    if (outdoor_temperature_sensor ~= nil) then
+        self:notify(outdoor_temperature_sensor, Profile.MAIN, {
+            state:get_outdoor_temperature(),
+        })
+    end
 end
 
 function ui:schedule_refresh(device)

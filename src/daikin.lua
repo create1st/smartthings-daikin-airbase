@@ -7,8 +7,8 @@ local json = require('st.json')
 local log = require('log')
 local Attributes = require('attributes')
 
-local MAX_RECONNECT_ATTEMPTS = 20
-local RECONNECT_PERIOD = 1 -- seconds
+local MAX_RECONNECT_ATTEMPTS = 200
+local RECONNECT_PERIOD = 0.2 -- seconds
 local Daikin = {}
 
 function Daikin:new(api_host)
