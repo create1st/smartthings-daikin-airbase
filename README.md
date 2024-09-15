@@ -1,17 +1,15 @@
 <div align="center">    
  <img src="https://img.shields.io/github/license/create1st/smartthings-daikin-airbase.svg" align="left" />
- <img src="https://img.shields.io/badge/smartthings.svg" align="left" />
- <img src="https://img.shields.io/badge/APIv10-Hub-Release-0.53.X" align="left" />
+ <img src="https://img.shields.io/badge/smartthings-blue.svg" align="left" />
+ <img src="https://img.shields.io/badge/LUA_API_v10_Hub_Release-0.53.X-green.svg" align="left" />
  <img src="https://img.shields.io/badge/PRs-welcome-green.svg" align="left" />
 </div>
 
 # Daikin Airbase BRP15B61 edge handler for SmartThings
 
-<div align="center">    
- <span width="30%"><img src="documentation/discovery.png" align="left" alt="Device discovery" width /></span>
- <span width="30%"><img src="documentation/unit.png" align="left" alt="Main unit" /></span>
- <span width="30%"><img src="documentation/discovery.png" align="left" alt="Temperature sensor" /></span>
-</div>
+| Device discovery | Main unit | Temperature sensor |
+|---|---|---|
+| <img src="documentation/discovery.png" alt="Device discovery" width="300px"/> | <img src="documentation/unit.png" alt="Main unit" width="300px" /> | <img src="documentation/discovery.png" alt="Temperature sensor" width="300px"/> |
 
 ### Disclaimer
 All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. 
