@@ -1,4 +1,9 @@
 # Daikin Airbase BRP15B61 edge handler for Smarthings
+
+[Device discovery](documentation/discovery.png "Device discovery")
+[Main unit](documentation/unit.png "Main unit")
+[Temperature sensor](documentation/discovery.png "Temperature sensor")
+
 ### Disclaimer
 All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. 
 Their use does not imply affiliation with or endorsement by them or any associated subsidiaries!
