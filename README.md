@@ -9,7 +9,7 @@
 
 | Device discovery | Main unit | Temperature sensor |
 |---|---|---|
-| <img src="documentation/discovery.png" alt="Device discovery" width="300px"/> | <img src="documentation/unit.png" alt="Main unit" width="300px" /> | <img src="documentation/discovery.png" alt="Temperature sensor" width="300px"/> |
+| <img src="documentation/discovery.png" alt="Device discovery" width="300px"/> | <img src="documentation/unit.png" alt="Main unit" width="300px" /> | <img src="documentation/sensor.png" alt="Temperature sensor" width="300px"/> |
 
 ### Disclaimer
 All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. 
