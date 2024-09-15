@@ -1,8 +1,17 @@
+<div align="center">    
+ <img src="https://img.shields.io/github/license/create1st/smartthings-daikin-airbase.svg" align="left" />
+ <img src="https://img.shields.io/badge/smartthings.svg" align="left" />
+ <img src="https://img.shields.io/badge/APIv10-Hub-Release-0.53.X" align="left" />
+ <img src="https://img.shields.io/badge/PRs-welcome-green.svg" align="left" />
+</div>
+
 # Daikin Airbase BRP15B61 edge handler for SmartThings
 
-[Device discovery](documentation/discovery.png "Device discovery")
-[Main unit](documentation/unit.png "Main unit")
-[Temperature sensor](documentation/discovery.png "Temperature sensor")
+<div align="center">    
+ <img src="documentation/discovery.png" align="left" alt="Device discovery" />
+ <img src="documentation/unit.png" align="left" alt="Main unit" />
+ <img src="documentation/discovery.png" align="left" alt="Temperature sensor" />
+</div>
 
 ### Disclaimer
 All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. 
@@ -22,9 +31,6 @@ https://developer.smartthings.com/docs/devices/capabilities/capabilities-referen
 https://developer.smartthings.com/docs/devices/capabilities/custom-capabilities
 https://community.smartthings.com/t/tutorial-writing-an-rpc-client-edge-device-driver/230285
 https://community.smartthings.com/t/tutorial-creating-drivers-for-lan-devices-with-smartthings-edge/229501
-
-### TODO 
-- add custom capability for outdoor temperature
 
 ### Dependencies
 https://developer.smartthings.com/docs/sdks/cli/introduction
