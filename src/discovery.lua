@@ -54,6 +54,7 @@ function discovery.create_temperature_sensor(driver, parent_metadata, sensor_id)
     end
     local metadata = {
         type = 'EDGE_CHILD',
+        device_network_id = string.format('%s_%s_temperature_sensor', parent_metadata.device_network_id, sensor_id),
         label = string.format('%s %s temperature sensor', parent_metadata.label, sensor_id),
         profile = TEMPERATURE_SENSOR_PROFILE,
         manufacturer = MANUFACTURER,

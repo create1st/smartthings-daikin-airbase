@@ -137,8 +137,9 @@ function ui:schedule_refresh(device)
 end
 
 function ui:destroy(device)
-    log.debug(string.format('[%s] device', device.id))
+    log.debug(string.format('[%s] destroy', device.id))
     for timer in pairs(device.thread.timers) do
+        log.debug(string.format('[%s] cancel_timer', device.id))
         device.thread:cancel_timer(timer)
     end
 end
