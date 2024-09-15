@@ -1,4 +1,4 @@
-# Daikin Airbase BRP15B61 edge handler for Smarthings
+# Daikin Airbase BRP15B61 edge handler for SmartThings
 
 [Device discovery](documentation/discovery.png "Device discovery")
 [Main unit](documentation/unit.png "Main unit")
