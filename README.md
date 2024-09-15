@@ -8,9 +8,9 @@
 # Daikin Airbase BRP15B61 edge handler for SmartThings
 
 <div align="center">    
- <div width="30%"><img src="documentation/discovery.png" align="left" alt="Device discovery" width /></div>
- <div width="30%"><img src="documentation/unit.png" align="left" alt="Main unit" /></div>
- <div width="30%"><img src="documentation/discovery.png" align="left" alt="Temperature sensor" /></div>
+ <span width="30%"><img src="documentation/discovery.png" align="left" alt="Device discovery" width /></span>
+ <span width="30%"><img src="documentation/unit.png" align="left" alt="Main unit" /></span>
+ <span width="30%"><img src="documentation/discovery.png" align="left" alt="Temperature sensor" /></span>
 </div>
 
 ### Disclaimer
