@@ -76,6 +76,21 @@ You can reset these settings using the config:reset command.
 4c83ac01-c974-41b4-8f81-51429c21e4a9 enrolled in channel debeba40-9bc2-47fe-94fb-90769cec8730
 ```
 ```bash
+smartthings edge:drivers:package .
+```
+```text
+───────────────────────────────────────────────────
+ Driver Id    cb32c4d5-a7e4-4624-9c4a-e8e8e2b68f87
+ Name         Daikin Airbase BRP15B61
+ Package Key  com.smartthings.daikin.skyfi
+ Version      2026-02-01T03:59:06.906910344
+───────────────────────────────────────────────────
+```
+On some systems, you may need to manually enforce the channel ID to the one you have created in the first step. Otherwise, the step config:default is optional.
+```bash
+smartthings config:default channel debeba40-9bc2-47fe-94fb-90769cec8730
+```
+```bash
 smartthings edge:channels:assign
 ```
 ```text
