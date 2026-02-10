@@ -104,3 +104,46 @@ Once the driver is installed on your hub:
 4. Tap on **"Scan nearby"**.
 5. Check the logs in your `logcat` session to verify discovery.
 6. The device should appear in your SmartThings app.
+
+### FAQ: Daikin Airbase with SmartThings Configuration
+
+#### Pre-requisites and Verification
+
+**Q1: What is this guide about?**
+A1: This guide helps troubleshoot the setup of a Daikin Airbase unit with a SmartThings hub, using a custom Edge Driver
+
+**Q2: What are the essential verification steps to take before installing the driver?**
+A2:
+
+* Ensure your SmartThings Hub and Daikin Airbase are on the same network (BRP15B61 is very picky about the network and may require a 2.4GHz network).
+* Make sure you can use the official Daikin App.
+* You must know the static IP address of your Daikin Airbase.
+* Verify communication by running a `curl` command (e.g., `curl --location 'http://192.168.50.158/skyfi/common/basic_info'`) from your PC, substituting your Airbase's IP address. A successful response confirms that your computer (and the SmartThings hub on the same network) can communicate with the unit, and that your Daikin Airbase version is compatible with the `skyfi` API endpoint.
+
+#### Driver Installation Issues (CLI)
+
+**Q3: I am getting a "no driver found" error during installation via the SmartThings CLI. What might be the cause?**
+A3: This error can stem from two main causes:
+
+* **Incorrect Directory:** CLI commands must be run from the root directory of the repo (e.g., `C:\smartthings-daikin-airbase`), not from a system directory (e.g., `C:\WINDOWS\system32`).
+* **Missing Driver Package:** Before the channel assignment command (`smartthings edge:channels:assign`), you must package the driver using the command: `smartthings edge:drivers:package .`
+
+**Q4: I packaged the driver and assigned it to a channel, but I still get "no drivers found" on install.**
+A4: If you are using the Windows CLI, there might be an issue with the default channel: the `smartthings edge:channels:assign` command might be assigning the driver to a different, default channel, rather than the one you created (`Daikin-Airbase-BRP15B61`). Try to force the correct channel:
+
+1.  Set the correct channel ID as the default:
+    ``` 
+    smartthings config:default channel <uuid-of-the-channel-you-created>
+    
+    ```
+    (Use the ID of your newly created channel).
+2.  Then try assigning the channel again:
+    ``` 
+    smartthings edge:channels:assign
+    
+    ```
+
+#### Post-Installation Issues
+
+**Q5: The main controls (on/off) work, but the temperature sensors are reporting incorrect values.**
+A5: The built-in temperature sensors in the Daikin Airbase (indoor in the thermostat, outdoor on the unit) may not be reliable or their readings can be confusing. The temperature on the thermostat is the **set temperature**, not the actual room temperature. For reliable automation, it is recommended to use a separate, dedicated temperature sensor.
