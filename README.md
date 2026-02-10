@@ -105,45 +105,48 @@ Once the driver is installed on your hub:
 5. Check the logs in your `logcat` session to verify discovery.
 6. The device should appear in your SmartThings app.
 
-### FAQ: Daikin Airbase with SmartThings Configuration
+### Frequently Asked Questions (FAQ)
 
-#### Pre-requisites and Verification
+<details>
+<summary><b>1. What are the essential verification steps before installing?</b></summary>
 
-**Q1: What is this guide about?**
-A1: This guide helps troubleshoot the setup of a Daikin Airbase unit with a SmartThings hub, using a custom Edge Driver
+- **Network:** Ensure your SmartThings Hub and Daikin Airbase are on the same network (preferably 2.4GHz).
+- **Official App:** Verify the unit works correctly with the official Daikin Airbase app.
+- **Connectivity Test:** Find your unit's IP address and run this command from a computer on the same network:
+  ```bash
+  curl "http://<YOUR_UNIT_IP>/skyfi/common/basic_info"
+  ```
+  A successful response confirms the unit is reachable and compatible with the `skyfi` API.
+</details>
 
-**Q2: What are the essential verification steps to take before installing the driver?**
-A2:
+<details>
+<summary><b>2. I get a "no driver found" error during CLI installation. What's wrong?</b></summary>
 
-* Ensure your SmartThings Hub and Daikin Airbase are on the same network (Daikin is very picky about the network and may require a 2.4GHz network).
-* Make sure you can use the official Daikin App.
-* You must know the static IP address of your Daikin Airbase.
-* Verify communication by running a `curl` command (e.g., `curl --location 'http://192.168.50.158/skyfi/common/basic_info'`) from your PC, substituting your Airbase's IP address. A successful response confirms that your computer (and the SmartThings hub on the same network) can communicate with the unit, and that your Daikin Airbase version is compatible with the `skyfi` API endpoint.
+- **Directory Context:** Ensure you are running commands from the root directory of this project, not a system folder.
+- **Missing Package:** You must package the driver before assigning it. Run `make package` or:
+  ```bash
+  smartthings edge:drivers:package .
+  ```
+</details>
 
-#### Driver Installation Issues (CLI)
+<details>
+<summary><b>3. I assigned the driver but it still won't install.</b></summary>
 
-**Q3: I am getting a "no driver found" error during installation via the SmartThings CLI. What might be the cause?**
-A3: This error can stem from two main causes:
+The CLI might be using a different default channel. Force the correct channel by setting the default:
+1. Set the default channel:
+   ```bash
+   smartthings config:default channel <your-channel-uuid>
+   ```
+2. Re-assign the driver:
+   ```bash
+   smartthings edge:channels:assign
+   ```
+</details>
 
-* **Incorrect Directory:** CLI commands must be run from the root directory of the repo (e.g., `C:\smartthings-daikin-airbase`), not from a system directory (e.g., `C:\WINDOWS\system32`).
-* **Missing Driver Package:** Before the channel assignment command (`smartthings edge:channels:assign`), you must package the driver using the command: `smartthings edge:drivers:package .`
+<details>
+<summary><b>4. Why are the temperature readings confusing?</b></summary>
 
-**Q4: I packaged the driver and assigned it to a channel, but I still get "no drivers found" on install.**
-A4: If you are using the Windows CLI, there might be an issue with the default channel: the `smartthings edge:channels:assign` command might be assigning the driver to a different, default channel, rather than the one you created (`Daikin-Airbase-BRP15B61`). Try to force the correct channel:
-
-1.  Set the correct channel ID as the default:
-    ``` 
-    smartthings config:default channel <uuid-of-the-channel-you-created>
-    
-    ```
-    (Use the ID of your newly created channel).
-2.  Then try assigning the channel again:
-    ``` 
-    smartthings edge:channels:assign
-    
-    ```
-
-#### Post-Installation Issues
-
-**Q5: The main controls (on/off) work, but the temperature sensors are reporting incorrect values.**
-A5: The built-in temperature sensors in the Daikin Airbase (indoor in the thermostat, outdoor on the unit) may not be reliable or their readings can be confusing. The temperature on the thermostat is the **set temperature**, not the actual room temperature. For reliable automation, it is recommended to use a separate, dedicated temperature sensor.
+The Daikin Airbase reports several temperatures:
+- **Set Temperature:** What you see on the thermostat display.
+- **Indoor/Outdoor Sensors:** These are internal to the Daikin hardware and can be slow to update or less accurate than dedicated SmartThings sensors. For precise automation, we recommend using a separate temperature sensor.
+</details>
