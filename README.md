@@ -13,12 +13,18 @@
 
 ### Disclaimer
 
-All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. 
-Their use does not imply affiliation with or endorsement by them or any associated subsidiaries!
-**Daikin** is a trademark of **Daikin Industries, Ltd**. **SmartThings** is a trademark of **SmartThings Inc.** a subsidiary of **Samsung Electronics**.
+This software is provided **"AS IS"**, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 
-This personal project has an educational context, is developed as a proof of concept, and has no business goal.
-The author is not responsible for the harm or damage caused by using this software. You may use it at your own risk and responsibility only.
+**Safety Warning:**
+This driver is a **proof of concept** for educational purposes. It is **not** intended for use in mission-critical environments, such as server rooms, medical storage, or primary residential heating/cooling where equipment failure could lead to property damage or personal injury. Users should always maintain the ability to control their HVAC system through official Daikin hardware or apps.
+
+**Trademark and API Notice:**
+*   **Daikin** is a registered trademark of **Daikin Industries, Ltd**.
+*   **SmartThings** is a trademark of **SmartThings Inc.** / **Samsung Electronics**.
+*   This project is an independent, community-driven effort and is **not** affiliated with, endorsed by, or associated with Daikin Industries or Samsung Electronics.
+*   The API endpoints and communication protocols used in this driver were implemented based on **publicly available community documentation** (see [Resources](#resources)). No proprietary Daikin software was reverse-engineered by the author for this project.
+
+This project is licensed under the [Apache License 2.0](LICENSE).
 
 ### Resources
 
