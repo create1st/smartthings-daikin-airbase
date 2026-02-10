@@ -115,7 +115,7 @@ A1: This guide helps troubleshoot the setup of a Daikin Airbase unit with a Smar
 **Q2: What are the essential verification steps to take before installing the driver?**
 A2:
 
-* Ensure your SmartThings Hub and Daikin Airbase are on the same network (BRP15B61 is very picky about the network and may require a 2.4GHz network).
+* Ensure your SmartThings Hub and Daikin Airbase are on the same network (Daikin is very picky about the network and may require a 2.4GHz network).
 * Make sure you can use the official Daikin App.
 * You must know the static IP address of your Daikin Airbase.
 * Verify communication by running a `curl` command (e.g., `curl --location 'http://192.168.50.158/skyfi/common/basic_info'`) from your PC, substituting your Airbase's IP address. A successful response confirms that your computer (and the SmartThings hub on the same network) can communicate with the unit, and that your Daikin Airbase version is compatible with the `skyfi` API endpoint.
