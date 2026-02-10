@@ -1,0 +1,9 @@
+name: daikin.skyfi.sensor.temperature.v1
+components:
+  - id: main
+    label: Daiking Airbase temperature sensor
+    capabilities:
+      - id: temperatureMeasurement
+        version: 1
+    categories:
+      - name: TempSensor
